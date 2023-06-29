@@ -1,0 +1,7 @@
+node_modules
+.nuxt
+dist
+.vscode
+package.json
+package-lock.json
+vite.config.js

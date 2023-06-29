@@ -1,0 +1,4 @@
+<template>
+    <DefaultNav />
+    <slot />
+</template>
