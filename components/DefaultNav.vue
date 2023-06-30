@@ -1,6 +1,6 @@
 <template>
-	<nav class="h-[8%] text-center shadow-md">
-		<NuxtLink to="/">Cinemax</NuxtLink>
-		<h2>Easily Book Movie Tickets Online</h2>
+	<nav class="py-2 text-center border-b-2">
+		<NuxtLink to="/" class="font-ubuntu text-2xl">Cinemax</NuxtLink>
+		<h2 class="font-nunito">Easily Book Movie Tickets Online</h2>
 	</nav>
 </template>
