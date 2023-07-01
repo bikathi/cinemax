@@ -13,9 +13,9 @@ module.exports = {
 			fontFamily: {
 				ubuntu: ['Ubuntu', 'sans-serif'],
 				nunito: ['Nunito', 'sans-serif'],
+				roboto: ['Roboto', 'sans-serif'],
 			},
 		},
 	},
 	plugins: [],
 };
-
