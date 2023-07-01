@@ -6,6 +6,6 @@
 			class="w-20" />
 		<h1 class="text-3xl font-ubuntu">Oops!</h1>
 		<h1 class="text-xl font-ubuntu">Seems like you have a broken link :(</h1>
-		<NuxtLink to="/" class="go-home-broken">Go Home</NuxtLink>
+		<NuxtLink to="/" class="nuxt-link">Go Home</NuxtLink>
 	</div>
 </template>
