@@ -13,5 +13,9 @@
 
 .homepage-search {
     @apply py-2 pl-3 rounded-l-full outline-none text-black/80 font-nunito
-    w-[50%] h-12 text-lg;
+    w-[50%] h-12 text-lg border-[1px] border-purple-600;
+}
+
+.active-route-link {
+    @apply border-b-[2px] border-b-purple-600 transition;
 }
