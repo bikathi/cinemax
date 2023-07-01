@@ -5,26 +5,19 @@
 </script>
 
 <template>
-	<main class="flex place-content-center place-items-center">
-		<div class="w-1/2 flex flex-col justify-center space-y-2">
-			<h1 class="font-roboto text-6xl font-normal text-center">
-				Cinemax
-			</h1>
-			<h2 class="font-normal text-3xl">
-				Tired of Waiting In-Line to Get a Cinema Ticket?
-			</h2>
-
-			<div class="place-items-center p-1 flex justify-center">
-				<input
-					type="text"
-					placeholder="what movie do you want to watch?"
-					class="homepage-search" />
-				<NuxtLink
-					to="/movies"
-					class="bg-purple-600 h-12 rounded-r-full w-[13%] inline-flex items-center justify-center"
-					>Search</NuxtLink
-				>
-			</div>
-		</div>
+	<main class="flex flex-col justify-center items-center">
+		<h1 class="font-roboto text-6xl font-normal text-center">Cinemax</h1>
+		<h2 class="font-normal font-roboto tracking-wide text-2xl text-purple-600">
+			Tired of Waiting In-Line to Get a Cinema Ticket?
+		</h2>
+		<h3 class="font-roboto font-normal tracking-wide text-xl">
+			Book You Ticket Online Today. Ready?
+		</h3>
+		<NuxtLink
+			:to="{ name: 'movies' }"
+			class="bg-purple-600 font-nunito p-2 text-white rounded-full w-[15%] inline-flex 
+			items-center justify-center text-lg"
+			>See Available Movies</NuxtLink
+		>
 	</main>
 </template>
