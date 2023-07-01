@@ -5,7 +5,7 @@
 </script>
 
 <template>
-	<div class="h-screen flex place-content-center place-items-center">
+	<main class="flex place-content-center place-items-center">
 		<div class="w-1/2 flex flex-col justify-center space-y-2">
 			<h1 class="font-roboto text-6xl font-normal text-center">
 				Cinemax
@@ -26,5 +26,5 @@
 				>
 			</div>
 		</div>
-	</div>
+	</main>
 </template>
