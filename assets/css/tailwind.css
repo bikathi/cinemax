@@ -1,10 +1,17 @@
-@import url(https://fonts.bunny.net/css?family=ubuntu:500|nunito:500);
+@import url(https://fonts.bunny.net/css?family=ubuntu:500|nunito:500|roboto:500);
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.go-home-broken {
-    @apply bg-purple-500 text-white font-semibold hover:bg-purple-800 w-[15%] 
-    text-center p-2 rounded-full mt-3 transition ease-in-out duration-500;
+@layer components {
+	.nuxt-link {
+		@apply bg-purple-600 text-white font-semibold hover:bg-purple-800 w-[15%] 
+        text-center p-2 rounded-full mt-3 transition ease-in-out duration-500;
+	}
+}
+
+.homepage-search {
+    @apply py-2 pl-3 rounded-l-full outline-none text-black/80 font-nunito
+    w-[50%] h-12 text-lg;
 }
