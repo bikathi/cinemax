@@ -1,3 +1,14 @@
+# About Cinemax
+
+Cinemax is owned and crafted by Bikathi Martin(Github:
+[bikathi](https://www.github.com/bikathi)), under the **Apache 2.0** license,
+for the sake of learning Nuxt3 along with M-PESA integration. With time, hosting
+may be provided, so that all my enjoy this amazing technology.
+
+Feel free to access the Open Source code on the project's Github
+[here](https://github.com/bikathi/cinemax) and provide suggestions, fixes and
+ideas any day of the week.
+
 # Cinemax Privacy Statement
 
 > Last updated: July 2nd, 2023
