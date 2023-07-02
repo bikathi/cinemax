@@ -9,7 +9,8 @@
 </script>
 
 <template>
-	<nav class="py-2 text-center border-b-2 flex flex-col md:flex-row items-center">
+	<nav
+		class="py-2 text-center border-b-2 flex flex-col md:flex-row items-center">
 		<div class="w-1/2 text-start ml-5">
 			<NuxtLink
 				to="/"
