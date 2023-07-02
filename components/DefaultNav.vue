@@ -9,16 +9,19 @@
 </script>
 
 <template>
-	<nav class="py-2 text-center border-b-2 flex items-center">
+	<nav class="py-2 text-center border-b-2 flex flex-col md:flex-row items-center">
 		<div class="w-1/2 text-start ml-5">
 			<NuxtLink
 				to="/"
-				class="font-ubuntu text-2xl"
-				>Cinemax</NuxtLink
-			>
-			<h2 class="font-nunito">Easily Book Movie Tickets Online</h2>
+				class="font-ubuntu text-2xl inline-flex items-center">
+				<img
+					src="/core-svg/cinemax-fav.svg"
+					alt="app-logo"
+					class="w-7 space-x-1" />
+				Cinemax
+			</NuxtLink>
 		</div>
-		<div class="w-1/2 text-start px-10">
+		<div class="md:w-1/2 w-full md:text-start px-10">
 			<NuxtLink
 				v-for="(link, index) in routeLinks"
 				:key="index"
