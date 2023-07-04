@@ -36,5 +36,10 @@ export default defineNuxtConfig({
       ],
       title: "Cinemax"
     }
+  },
+  runtimeConfig: {
+    public: {
+      TMDB_RAT: process.env.TMDB_RAT,
+    }
   }
 })
