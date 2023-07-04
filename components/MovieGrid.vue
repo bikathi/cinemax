@@ -5,14 +5,12 @@
 	const currentPage = ref(1);
 
 	const {data, error} = await useFetch(
-	    `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1`,
+	    "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
 	    {
 	        headers: {
 	            Authorization: `Bearer ${runtimeConfig.public.TMDB_RAT}`
 	        },
 	        suspense: true,
-            lazy: true,
-            cache: 1000 * 60 * 60 // cache results for an hour
 	    }
 	);
 
@@ -20,31 +18,28 @@
         return result;
     });
 
-    /*
     async function loadMoreMovies() {
-        currentPage.value = currentPage.value + 1;
+        
         componentEmits("loadMoreMovies");
 
         const {data, error} = await useFetch(
-            `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${currentPage}`,
+            `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${currentPage.value}`,
             {
                 headers: {
                     Authorization: `Bearer ${runtimeConfig.public.TMDB_RAT}`
                 },
                 suspense: false,
-                lazy: true,
-                cache: 1000 * 60 * 60 // cache results for an hour
             }
         );
         data.value.results.forEach((result) => {
             movies.value.push(result);
         });
+		componentEmits("moviesDoneLoading");
     }
-    */
 </script>
 
 <template>
-	<div class="col-span-6">
+	<div class="col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 xl:col-span-6 2xl:col-span-7">
 		<h1 class="font-roboto text-3xl">Now Playing</h1>
 	</div>
 	<MovieDisplay
@@ -56,7 +51,10 @@
 	<div class="h-full flex justify-center items-center">
 		<button
 			class="nuxt-link w-fit mt-0 px-3"
-			@click="">
+			@click="() => {
+				currentPage++;
+				loadMoreMovies();
+			}">
 			See More
 		</button>
 	</div>
