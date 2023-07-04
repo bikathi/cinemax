@@ -1,20 +1,33 @@
 <script setup lang="js">
 	definePageMeta({
-	    name: "movies"
+	    name: "movies",
+		keepalive: true
 	});
-	const runtimeConfig = useRuntimeConfig()
+	const mountGridLoading = ref(false);
 </script>
 
 <template>
 	<main class="flex-grow p-5 grid grid-cols-6 gap-2">
-		<div class="col-span-6">
-			<h1 class="font-roboto text-3xl">Available Movies</h1>
-		</div>
-		<MovieDisplay
-			v-for="a in 10"
-			:key="a"
-			posterLink="/images/extraction-2.jpg"
-			movieId="1234567980347474"
-			movieName="Extraction 2" />
+		<Suspense>
+			<MovieGrid
+				@loadMoreMovies="
+					() => {
+						console.log('movies loading event emmitted');
+						mountGridLoading = true;
+					}
+				"
+				@moviesDoneLoading="
+					() => {
+						console.log('movies done loading');
+						mountGridLoading = false;
+					}
+				" />
+			<template #fallback>
+				<h1>loading...</h1>
+			</template>
+		</Suspense>
+		<MovieGridLoading
+			v-if="mountGridLoading === true"
+			v-for="a in 14" />
 	</main>
 </template>
