@@ -14,7 +14,7 @@
 				target="_blank"
 				class="transition hover:-translate-y-2 hover:scale-110 duration-500">
 				<img
-					src="/core-svg/github-icon.svg"
+					src="/vectors/github-icon.svg"
 					alt="gh"
 					class="w-10" />
 			</a>

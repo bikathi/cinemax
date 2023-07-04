@@ -1,7 +1,7 @@
 <template>
 	<div class="h-screen flex flex-col justify-center items-center">
 		<img
-			src="/core-svg/broken-link.svg"
+			src="/vectors/broken-link.svg"
 			alt="broken-link"
 			class="w-20" />
 		<h1 class="text-3xl font-ubuntu">Oops!</h1>

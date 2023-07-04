@@ -16,10 +16,10 @@
 		</h3>
 		<NuxtLink
 			:to="{ name: 'movies' }"
-			class="bg-purple-600 font-nunito p-2 text-white rounded-full inline-flex items-center justify-center text-lg w-fit">
+			class="bg-purple-600 font-nunito p-2 px-3 text-white rounded-full inline-flex items-center justify-center text-lg w-fit">
 			See Available Movies
 			<img
-				src="/core-svg/arrow-right.svg"
+				src="/vectors/arrow-right.svg"
 				alt="arrow-right"
 				class="w-5" />
 		</NuxtLink>

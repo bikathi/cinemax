@@ -16,7 +16,7 @@
 				to="/"
 				class="font-ubuntu text-2xl inline-flex items-center">
 				<img
-					src="/core-svg/cinemax-fav.svg"
+					src="/vectors/cinemax-fav.svg"
 					alt="app-logo"
 					class="w-7 space-x-1" />
 				Cinemax
