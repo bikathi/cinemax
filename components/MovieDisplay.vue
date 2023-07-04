@@ -6,8 +6,9 @@
 	       required: true
 	   },
 	   movieId: {
-	       default: null,
-	       required: true
+			type: Number,
+			default: null,
+			required: true
 	   },
 	   movieName: {
 	       type: String,
@@ -15,12 +16,13 @@
 	       required: true
 	   }
 	});
+	const basePosterPath = "https://image.tmdb.org/t/p/w500";
 </script>
 
 <template>
-	<div class="flex flex-col h-fit relative group">
+	<div class="flex flex-col h-fit relative group space-y-1">
 		<img
-			:src="posterLink"
+			:src="`${basePosterPath}${posterLink}`"
 			alt="movie-poster"
 			class="h-[95%] w-full rounded-md object-fill group-hover:brightness-75" />
 		<h1 class="font-nunito truncate">{{ movieName }}</h1>
