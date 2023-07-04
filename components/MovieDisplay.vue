@@ -14,9 +14,15 @@
 	       type: String,
 	       default: null,
 	       required: true
+	   },
+	   movieIndex: {
+			type: Number,
+			default: null,
+			required: true
 	   }
 	});
-	const basePosterPath = "https://image.tmdb.org/t/p/w500";
+	const runtimeConfig = useRuntimeConfig();
+	const basePosterPath = runtimeConfig.public.MEDIA_BASE_PATH;
 </script>
 
 <template>
@@ -31,7 +37,12 @@
 			<NuxtLink
 				:to="{
 					name: 'details',
-					query: { name: movieName.trim(), id: movieId },
+					query: {
+						name: movieName.trim(),
+						id: movieId,
+						poster: posterLink,
+						index: movieIndex,
+					},
 				}"
 				class="nuxt-link w-fit mt-0"
 				>Learn More</NuxtLink
