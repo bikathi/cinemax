@@ -27,6 +27,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       TMDB_RAT: process.env.TMDB_RAT,
+      MEDIA_BASE_PATH: process.env.MEDIA_BASE_PATH,
     }
   },
   modules: [
