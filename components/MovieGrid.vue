@@ -1,8 +1,12 @@
 <script setup lang="js">
+	import {useMovieStore} from '~/store/movies.js';
+	
 	const componentEmits = defineEmits(['loadMoreMovies', 'moviesDoneLoading'])
 	const runtimeConfig = useRuntimeConfig();
 	const movies = ref([]);
 	const currentPage = ref(1);
+	const movieStore = useMovieStore();
+	const { addMovie } = movieStore;
 
 	const {data, error} = await useFetch(
 	    "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
@@ -15,6 +19,7 @@
 	);
 
     movies.value = await data.value.results.map((result) => {
+		addMovie(result);
         return result;
     });
 
@@ -33,6 +38,7 @@
         );
         data.value.results.forEach((result) => {
             movies.value.push(result);
+			addMovie(result);
         });
 		componentEmits("moviesDoneLoading");
     }
@@ -46,7 +52,8 @@
 		v-for="(movie, index) in movies"
 		:key="index"
 		:posterLink="movie.poster_path"
-		:movieId="index"
+		:movieId="movie.id"
+		:movieIndex="index"
 		:movieName="movie.title" />
 	<div class="h-full flex justify-center items-center">
 		<button
