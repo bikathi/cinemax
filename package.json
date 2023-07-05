@@ -6,7 +6,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "syncdbs": "npx prisma migrate dev --name init"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
@@ -14,14 +15,19 @@
     "autoprefixer": "^10.4.14",
     "nuxt": "^3.6.1",
     "postcss": "^8.4.24",
+    "prisma": "^4.16.2",
     "tailwindcss": "^3.3.2"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
+    "@prisma/client": "^4.16.2",
     "marked": "^5.1.0",
     "pinia": "^2.1.4"
   },
   "overrides": {
     "vue": "latest"
+  },
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
   }
 }
