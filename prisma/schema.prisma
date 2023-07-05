@@ -16,7 +16,7 @@ model Client {
   firstName    String
   lastName     String
   email        String
-  mobileNumber Int
+  mobileNumber String
   location     String
 }
 
