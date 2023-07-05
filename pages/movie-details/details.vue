@@ -1,7 +1,8 @@
 <script setup lang="js">
 	import {useMovieStore} from '~/store/movies.js';
 	definePageMeta({
-	    name: "details"
+	    name: "details",
+		keepalive: true
 	})
 
 	const route = useRoute();
@@ -34,7 +35,7 @@
 </script>
 
 <template>
-	<main class="flex-grow">
+	<main class="flex-grow flex flex-col justify-between">
 		<div
 			class="h-[30rem] bg-gradient-to-b from-purple-900 to-white w-full relative flex flex-col justify-between">
 			<img
@@ -53,7 +54,9 @@
 				</div>
 				<div class="flex flex-col justify-end mx-4 sm:mx-0">
 					<h1 class="text-gray-400 font-ubuntu text-2xl">
-						TMDB: {{ movie && Math.round(movie.vote_average * 10) /10 }} |
+						TMDB:
+						{{ movie && Math.round(movie.vote_average * 10) / 10 }}
+						|
 						{{ movie && movie.vote_count }}
 					</h1>
 					<h1 class="text-gray-400 font-ubuntu text-lg">
@@ -65,5 +68,15 @@
 		<p class="p-4 font-nunito font-normal text-gray-700">
 			{{ movie && movie.overview }}
 		</p>
+		<div class="p-2 py-3 text-center">
+			<NuxtLink
+				:to="{
+					name: 'your-details',
+					query: { movie: route.query.name },
+				}"
+				class="nuxt-link px-3"
+				>Book Ticket for This Movie</NuxtLink
+			>
+		</div>
 	</main>
 </template>
