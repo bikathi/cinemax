@@ -28,6 +28,8 @@ export default defineNuxtConfig({
     public: {
       TMDB_RAT: process.env.TMDB_RAT,
       MEDIA_BASE_PATH: process.env.MEDIA_BASE_PATH,
+      MPESA_CONSUMER_KEY: process.env.MPESA_CONSUMER_KEY,
+      MPESA_CONSUMER_SECRET: process.env.MPESA_CONSUMER_SECRET,
     }
   },
   modules: [
