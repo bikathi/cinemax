@@ -55,7 +55,7 @@
 		:movieId="movie.id"
 		:movieIndex="index"
 		:movieName="movie.title" />
-	<div class="h-full flex justify-center items-center">
+	<div class="h-full flex justify-center items-center col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 xl:col-span-6 2xl:col-span-7">
 		<button
 			class="nuxt-link w-fit mt-0 px-3"
 			@click="() => {
