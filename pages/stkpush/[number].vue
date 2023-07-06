@@ -4,25 +4,35 @@
 		name: "stkpush"
 	});
 	const route = useRoute();
-	const initiating = ref(false);
-	const runtimeConfig = useRuntimeConfig();
-	const MPESA_CONSUMER_KEY = runtimeConfig.public.MPESA_CONSUMER_KEY;
-	const MPESA_CONSUMER_SECRET = runtimeConfig.public.MPESA_CONSUMER_SECRET;
-	const mpesaCredentials = btoa(`${MPESA_CONSUMER_KEY}:${MPESA_CONSUMER_SECRET}`);
+	const authenticating = ref(false);
+	const showProceed = ref(false);
+	const showTryAgain = ref(false);
 
-	async function initiateStkPush() {
-		initiating.value = true;
-		console.log("starting request....");
+	// TODO: Replace this with more secure logic
+	const mpesaAccessToken = ref("");
 
-		const {data, error} = await useFetch("https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials", {
-			method: "GET",
-			headers: {
-				Authorization: `Basic ${mpesaCredentials}`,
-			}
-		});
-		console.log(`data: ${JSON.stringify(data)}`);
-		console.log(`error: ${JSON.stringify(error.value)}`);
-		initiating.value = false;
+	async function initiateDarajaAuth() {
+		// ensure we don't see the try again screen and the proceed screen at first
+		showTryAgain.value = false;
+		showProceed.value = false;
+
+		// show the authenticating screen
+		authenticating.value = true;
+
+		const {data} = await useFetch("/daraja-auth");
+		console.log(`data: ${JSON.stringify(data.value)}`);
+		if(!data.value.successfull) {
+			// show try again screen
+			showTryAgain.value = true;
+		} else {
+			mpesaAccessToken.value = data.value.data.access_token;
+			// show the proceed button
+			showProceed.value = true;
+		}
+	}
+
+	async function proceedWithStkPush() {
+		console.log("proceeding with stkpush...");
 	}
 </script>
 
@@ -40,17 +50,45 @@
 		</p>
 		<button
 			class="p-2 px-3 bg-purple-600 w-fit text-white rounded-full"
-			@click="initiateStkPush">
+			@click="initiateDarajaAuth">
 			Accept
 		</button>
 	</main>
 	<main
-		v-if="initiating"
+		v-if="authenticating"
 		class="absolute h-screen bg-slate-700 opacity-95 backdrop-blur-md w-full flex flex-col justify-center items-center space-y-2">
-		<breeding-rhombus-spinner
-			:animation-duration="2000"
-			:size="65"
-			color="#FFFFFF" />
-		<h1 class="font-ubuntu text-2xl sm:text-3xl text-white">Initiating</h1>
+		<div
+			v-if="showProceed"
+			class="flex flex-col justify-center items-center">
+			<h1 class="font-ubuntu text-2xl sm:text-3xl text-white">
+				Initialization Successfull. Proceed?
+			</h1>
+			<button
+				class="p-2 px-3 bg-purple-600 w-fit text-white rounded-full"
+				@click="proceedWithStkPush">
+				Proceed.
+			</button>
+		</div>
+		<div
+			v-else-if="showTryAgain"
+			class="flex flex-col justify-center items-center">
+			<h1 class="font-ubuntu text-2xl sm:text-3xl text-white">
+				Request Failed. Try Again?
+			</h1>
+			<button
+				class="p-2 px-3 bg-purple-600 w-fit text-white rounded-full"
+				@click="initiateDarajaAuth">
+				Try Again.
+			</button>
+		</div>
+		<div v-else>
+			<breeding-rhombus-spinner
+				:animation-duration="2000"
+				:size="65"
+				color="#FFFFFF" />
+			<h1 class="font-ubuntu text-2xl sm:text-3xl text-white">
+				Initiating
+			</h1>
+		</div>
 	</main>
 </template>
