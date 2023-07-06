@@ -2,7 +2,7 @@
 	import {useMovieStore} from '~/store/movies.js';
 	definePageMeta({
 	    name: "details",
-		keepalive: true
+		keepalive: false
 	})
 
 	const route = useRoute();
@@ -32,6 +32,7 @@
 	});
 </script>
 
+<!-- TODO: This form should not be submitted if a user's details are already in the store -->
 <template>
 	<main class="flex-grow flex flex-col justify-between">
 		<div
