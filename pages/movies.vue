@@ -32,13 +32,13 @@
 				" />
 			<template #fallback>
 				<main
-					class="absolute h-screen bg-slate-700 opacity-95 backdrop-blur-md w-full flex flex-col justify-center items-center space-y-2">
+					class="flex-grow bg-slate-700 opacity-95 backdrop-blur-md w-full flex flex-col justify-center items-center space-y-2">
 					<breeding-rhombus-spinner
 						:animation-duration="2000"
 						:size="65"
 						color="#FFFFFF" />
 					<h1 class="font-ubuntu text-2xl sm:text-3xl text-white">
-						Initiating
+						Loading...
 					</h1>
 				</main>
 			</template>
