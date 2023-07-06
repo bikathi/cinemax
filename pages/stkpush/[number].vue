@@ -7,6 +7,7 @@
 	const authenticating = ref(false);
 	const showProceed = ref(false);
 	const showTryAgain = ref(false);
+	const tryingStkPush = ref(false);
 
 	// TODO: Replace this with more secure logic
 	const mpesaAccessToken = ref("");
@@ -32,7 +33,19 @@
 	}
 
 	async function proceedWithStkPush() {
+		tryingStkPush.value = true;
+		const requestBody = {
+			clientNumber: Number(route.params.number),
+			accessToken: mpesaAccessToken.value
+		}
+
 		console.log("proceeding with stkpush...");
+		const{data, error} = await useFetch("/initiate-stkpush", {
+			method: "POST",
+			body: JSON.stringify(requestBody),
+		});
+		console.log("data: " + data.value);
+		console.log("error: " + error.value);
 	}
 </script>
 
@@ -80,6 +93,15 @@
 				@click="initiateDarajaAuth">
 				Try Again.
 			</button>
+		</div>
+		<div v-else-if="tryingStkPush">
+			<breeding-rhombus-spinner
+				:animation-duration="2000"
+				:size="65"
+				color="#FFFFFF" />
+			<h1 class="font-ubuntu text-2xl sm:text-3xl text-white">
+				Attempting NI/STK Push
+			</h1>
 		</div>
 		<div v-else>
 			<breeding-rhombus-spinner
