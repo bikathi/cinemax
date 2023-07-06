@@ -5,7 +5,6 @@ export default defineEventHandler(async () => {
 	const mpesaCredentials = btoa(
 		`${MPESA_CONSUMER_KEY}:${MPESA_CONSUMER_SECRET}`,
 	);
-	console.log('b64 consumer key: ' + mpesaCredentials);
 
 	const response = await $fetch(
 		'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
