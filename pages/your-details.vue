@@ -18,12 +18,12 @@
 
 	async function saveClientDetails() {
 		submittingForm.value = true;
-		const {data, error} = await useFetch("/api/save-client-details", {
+		const {data} = await useFetch("/api/save-client-details", {
 			method: "POST",
 			body: JSON.stringify(clientData)
 		});
 		if(data.value.successfull) {
-			// save the data.value.data.clientDetails to a Store for later refference
+			// TODO: save the data.value.data to a Store for later refference
 
 			submittingForm.value = false;
 
@@ -31,7 +31,7 @@
 			router.push({name: 'stkpush', params: {number: `254${clientData.mobileNumber}`}});
 
 		} else {
-			// a notification for incase the call fails
+			// TODO: a notification for incase the call fails
 		}
 	}
 </script>
