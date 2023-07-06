@@ -15,7 +15,6 @@
 	movie.value = await getMovie(route.query.index);
 	onMounted(() => {
 		if(movie.value === undefined) {
-			console.log("undefined vote_average");
 			const movieId = route.query.id;
 			fetch(
 				`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
@@ -27,7 +26,6 @@
 			).then((response) => {
 				return response.json();
 			}).then((data) => {
-				console.log(data);
 				movie.value = data;
 			});
 		}
