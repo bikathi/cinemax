@@ -1,4 +1,6 @@
 <script setup lang="js">
+	import { LoopingRhombusesSpinner } from 'epic-spinners';
+
 	definePageMeta({
 		name: "your-details",
 		keepalive: true
@@ -12,14 +14,25 @@
 		mobileNumber: null,
 		location: null
 	});
+	const submittingForm = ref(false);
 
 	async function saveClientDetails() {
+		submittingForm.value = true;
 		const {data, error} = await useFetch("/api/save-client-details", {
 			method: "POST",
 			body: JSON.stringify(clientData)
 		});
-		console.log("data: " + data.value);
-		console.log("error: " + error.value);
+		if(data.value.successfull) {
+			// save the data.value.data.clientDetails to a Store for later refference
+
+			submittingForm.value = false;
+
+			// go to where mpesa starts
+			router.push({name: 'stkpush', params: {number: `254${clientData.mobileNumber}`}});
+
+		} else {
+			// a notification for incase the call fails
+		}
 	}
 </script>
 
@@ -84,7 +97,7 @@
 				<label
 					for="mobile-number"
 					class="font-roboto tracking-wide font-normal my-1"
-					>M-Pesa Mobile Number</label
+					>Your M-Pesa Mobile Number</label
 				>
 				<div class="flex space-x-2">
 					<input
@@ -116,23 +129,28 @@
 					<option>Mombasa</option>
 				</select>
 			</div>
-			<div
-				class="flex flex-col space-y-2 sm:space-y-0 sm:flex-row items-center justify-evenly space-x-0 sm:space-x-2">
-				<button
-					class="bg-transparent border-[1px] text-black w-full sm:w-1/3 p-4 rounded-sm"
-					@click="
-						() => {
-							router.back;
-						}
-					">
-					Back
-				</button>
-				<button
-					type="submit"
-					class="p-4 bg-purple-600 rounded-sm w-full sm:w-2/3 text-white">
-					Proceed
-				</button>
-			</div>
 		</form>
+		<div
+			class="flex flex-col space-y-2 sm:space-y-0 sm:flex-row items-center justify-evenly space-x-0 sm:space-x-2">
+			<button
+				class="bg-transparent border-[1px] text-black w-full sm:w-1/3 p-4 rounded-sm"
+				@click="
+					() => {
+						router.go(-1);
+					}
+				">
+				Back
+			</button>
+			<button
+				class="p-4 bg-purple-600 rounded-sm w-full sm:w-2/3 text-white flex justify-center items-center"
+				@click="saveClientDetails">
+				<looping-rhombuses-spinner
+					v-if="submittingForm"
+					:animation-duration="2500"
+					:rhombus-size="10"
+					color="#FFFFFF" />
+				<span v-else>Proceed</span>
+			</button>
+		</div>
 	</main>
 </template>
