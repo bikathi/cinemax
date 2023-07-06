@@ -22,6 +22,6 @@ export default defineEventHandler(async (event) => {
 	return {
 		status: 'SUCCESSFULL',
 		successfull: true,
-		clientDetails: client,
+		data: client,
 	};
 });
