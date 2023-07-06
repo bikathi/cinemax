@@ -1,5 +1,7 @@
 <script setup lang="js">
 	import {useMovieStore} from '~/store/movies.js';
+	import { BreedingRhombusSpinner } from 'epic-spinners';
+
 	definePageMeta({
 	    name: "movies",
 		keepalive: true
@@ -29,11 +31,20 @@
 					}
 				" />
 			<template #fallback>
-				<h1>loading...</h1>
+				<main
+					class="absolute h-screen bg-slate-700 opacity-95 backdrop-blur-md w-full flex flex-col justify-center items-center space-y-2">
+					<breeding-rhombus-spinner
+						:animation-duration="2000"
+						:size="65"
+						color="#FFFFFF" />
+					<h1 class="font-ubuntu text-2xl sm:text-3xl text-white">
+						Initiating
+					</h1>
+				</main>
 			</template>
 		</Suspense>
 		<MovieGridLoading
 			v-if="mountGridLoading === true"
-			v-for="a in 14" />
+			v-for="a in 20" />
 	</main>
 </template>
