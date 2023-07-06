@@ -2,7 +2,6 @@ import { prisma } from '../../prisma/db';
 
 export default defineEventHandler(async (event) => {
 	const clientDetails = await readBody(event);
-	console.log('clientDetails: ' + JSON.stringify(clientDetails));
 	const client = await prisma.client.create({
 		data: {
 			firstName: clientDetails.firstName,
@@ -12,6 +11,17 @@ export default defineEventHandler(async (event) => {
 			location: clientDetails.location,
 		},
 	});
+	if (!client) {
+		return {
+			status: 'FAILED',
+			successfull: false,
+			data: null,
+		};
+	}
 
-	console.log('done creating record: ' + JSON.stringify(client));
+	return {
+		status: 'SUCCESSFULL',
+		successfull: true,
+		clientDetails: client,
+	};
 });
