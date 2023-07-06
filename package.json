@@ -21,6 +21,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
     "@prisma/client": "^4.16.2",
+    "epic-spinners": "^2.0.0",
     "marked": "^5.1.0",
     "pinia": "^2.1.4"
   },
