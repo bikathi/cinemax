@@ -1,5 +1,5 @@
 <script setup lang="js">
-	import {useMovieStore} from '~/store/movies.js';
+	import {useMovieStore} from '~/stores/movies.js';
 	import { BreedingRhombusSpinner } from 'epic-spinners';
 
 	definePageMeta({
@@ -48,3 +48,4 @@
 			v-for="a in 10" />
 	</main>
 </template>
+../stores/movies.js

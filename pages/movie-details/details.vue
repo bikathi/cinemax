@@ -1,5 +1,5 @@
 <script setup lang="js">
-	import {useMovieStore} from '~/store/movies.js';
+	import {useMovieStore} from '~/stores/movies.js';
 	definePageMeta({
 	    name: "details",
 		keepalive: false
