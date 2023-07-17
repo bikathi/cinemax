@@ -1,51 +1,42 @@
 <script setup lang="js">
-	import { BreedingRhombusSpinner } from 'epic-spinners'
+	import { BreedingRhombusSpinner } from 'epic-spinners';
+
 	definePageMeta({
 		name: "stkpush"
 	});
 	const route = useRoute();
-	const authenticating = ref(false);
-	const showProceed = ref(false);
+	const attemptingTransaction = ref(false);
 	const showTryAgain = ref(false);
 	const tryingStkPush = ref(false);
 
-	// TODO: Replace this with more secure logic
-	const mpesaAccessToken = ref("");
+	async function initiateStkPush() {
+		//show attempting transaction screen
+		attemptingTransaction.value = true;
 
-	async function initiateDarajaAuth() {
-		// ensure we don't see the try again screen and the proceed screen at first
+		// ensure the try again screen is hidden
 		showTryAgain.value = false;
-		showProceed.value = false;
 
-		// show the authenticating screen
-		authenticating.value = true;
-
-		const {data} = await useFetch("/daraja-auth");
-		console.log(`data: ${JSON.stringify(data.value)}`);
-		if(!data.value.successfull) {
-			// show try again screen
-			showTryAgain.value = true;
-		} else {
-			mpesaAccessToken.value = data.value.data.access_token;
-			// show the proceed button
-			showProceed.value = true;
-		}
-	}
-
-	async function proceedWithStkPush() {
+		// show the trying stkpush screen though
 		tryingStkPush.value = true;
 		const requestBody = {
 			clientNumber: Number(route.params.number),
-			accessToken: mpesaAccessToken.value
 		}
 
-		console.log("proceeding with stkpush...");
+		console.log("proceeding to attempt transaction...");
 		const{data, error} = await useFetch("/initiate-stkpush", {
 			method: "POST",
 			body: JSON.stringify(requestBody),
 		});
 		console.log("data: " + data.value);
 		console.log("error: " + error.value);
+
+		if(!data.value.successfull) {
+			console.log("attempt for transaction failed. please try again...");
+			// if we were not able to request for an STK push start the entire process again
+			tryingStkPush.value = false;
+			showTryAgain.value = true;
+		}
+		console.log("STK push was succcessfull...");
 	}
 </script>
 
@@ -63,54 +54,36 @@
 		</p>
 		<button
 			class="p-2 px-3 bg-purple-600 w-fit text-white rounded-full"
-			@click="initiateDarajaAuth">
+			@click="initiateStkPush">
 			Accept
 		</button>
 	</main>
 	<main
-		v-if="authenticating"
+		v-if="attemptingTransaction"
 		class="absolute h-screen bg-slate-700 opacity-95 backdrop-blur-md w-full flex flex-col justify-center items-center space-y-2">
 		<div
-			v-if="showProceed"
+			v-if="showTryAgain"
 			class="flex flex-col justify-center items-center">
 			<h1 class="font-ubuntu text-2xl sm:text-3xl text-white">
-				Initialization Successfull. Proceed?
+				Attempt Failed. Try Again?
 			</h1>
 			<button
 				class="p-2 px-3 bg-purple-600 w-fit text-white rounded-full"
-				@click="proceedWithStkPush">
-				Proceed.
-			</button>
-		</div>
-		<div
-			v-else-if="showTryAgain"
-			class="flex flex-col justify-center items-center">
-			<h1 class="font-ubuntu text-2xl sm:text-3xl text-white">
-				Request Failed. Try Again?
-			</h1>
-			<button
-				class="p-2 px-3 bg-purple-600 w-fit text-white rounded-full"
-				@click="initiateDarajaAuth">
+				@click="initiateStkPush">
 				Try Again.
 			</button>
 		</div>
-		<div v-else-if="tryingStkPush">
+		<div
+			v-else-if="tryingStkPush"
+			class="flex flex-col justify-center items-center">
 			<breeding-rhombus-spinner
 				:animation-duration="2000"
 				:size="65"
 				color="#FFFFFF" />
 			<h1 class="font-ubuntu text-2xl sm:text-3xl text-white">
-				Attempting NI/STK Push
-			</h1>
-		</div>
-		<div v-else>
-			<breeding-rhombus-spinner
-				:animation-duration="2000"
-				:size="65"
-				color="#FFFFFF" />
-			<h1 class="font-ubuntu text-2xl sm:text-3xl text-white">
-				Initiating
+				Attempting Transaction
 			</h1>
 		</div>
 	</main>
 </template>
+../../stores/stkpush.js
