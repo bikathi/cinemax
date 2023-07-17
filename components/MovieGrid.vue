@@ -1,6 +1,6 @@
 <script setup lang="js">
-	import {useMovieStore} from '~/store/movies.js';
-	
+	import {useMovieStore} from '~/stores/movies.js';
+
 	const componentEmits = defineEmits(['loadMoreMovies', 'moviesDoneLoading'])
 	const runtimeConfig = useRuntimeConfig();
 	const movies = ref([]);
@@ -18,34 +18,35 @@
 	    }
 	);
 
-    movies.value = await data.value.results.map((result) => {
+	   movies.value = await data.value.results.map((result) => {
 		addMovie(result);
-        return result;
-    });
+	       return result;
+	   });
 
-    async function loadMoreMovies() {
-        
-        componentEmits("loadMoreMovies");
+	   async function loadMoreMovies() {
 
-        const {data, error} = await useFetch(
-            `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${currentPage.value}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${runtimeConfig.public.TMDB_RAT}`
-                },
-                suspense: false,
-            }
-        );
-        data.value.results.forEach((result) => {
-            movies.value.push(result);
+	       componentEmits("loadMoreMovies");
+
+	       const {data, error} = await useFetch(
+	           `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${currentPage.value}`,
+	           {
+	               headers: {
+	                   Authorization: `Bearer ${runtimeConfig.public.TMDB_RAT}`
+	               },
+	               suspense: false,
+	           }
+	       );
+	       data.value.results.forEach((result) => {
+	           movies.value.push(result);
 			addMovie(result);
-        });
+	       });
 		componentEmits("moviesDoneLoading");
-    }
+	   }
 </script>
 
 <template>
-	<div class="col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 xl:col-span-6 2xl:col-span-7">
+	<div
+		class="col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 xl:col-span-6 2xl:col-span-7">
 		<h1 class="font-roboto text-3xl">Now Playing</h1>
 	</div>
 	<MovieDisplay
@@ -55,14 +56,18 @@
 		:movieId="movie.id"
 		:movieIndex="index"
 		:movieName="movie.title" />
-	<div class="h-full flex justify-center items-center col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 xl:col-span-6 2xl:col-span-7">
+	<div
+		class="h-full flex justify-center items-center col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 xl:col-span-6 2xl:col-span-7">
 		<button
 			class="nuxt-link w-fit mt-0 px-3"
-			@click="() => {
-				currentPage++;
-				loadMoreMovies();
-			}">
+			@click="
+				() => {
+					currentPage++;
+					loadMoreMovies();
+				}
+			">
 			See More
 		</button>
 	</div>
 </template>
+../stores/movies.js
