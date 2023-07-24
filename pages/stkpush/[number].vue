@@ -86,4 +86,3 @@
 		</div>
 	</main>
 </template>
-../../stores/stkpush.js
