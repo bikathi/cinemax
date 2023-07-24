@@ -14,6 +14,7 @@ module.exports = {
 				ubuntu: ['Ubuntu', 'sans-serif'],
 				nunito: ['Nunito', 'sans-serif'],
 				roboto: ['Roboto', 'sans-serif'],
+				berkshire: ['Berkshire Swash', 'handwriting'],
 			},
 		},
 	},
