@@ -32,7 +32,8 @@ export default defineNuxtConfig({
       MPESA_CONSUMER_SECRET: process.env.MPESA_CONSUMER_SECRET,
       MPESA_BUSINESS_SHORTCODE: process.env.MPESA_BUSINESS_SHORTCODE,
       MPESA_CALLBACK_URL_BASE: process.env.MPESA_CALLBACK_URL_BASE,
-      MPESA_PUBLIC_PASSKEY: process.env.MPESA_PUBLIC_PASSKEY
+      MPESA_PUBLIC_PASSKEY: process.env.MPESA_PUBLIC_PASSKEY,
+      AT_API_KEY: process.env.AT_API_KEY
     }
   },
   modules: [
