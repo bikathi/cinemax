@@ -1,5 +1,4 @@
 import { useDarajaUtils } from '../../utils/darajapi-utils';
-import { useStkPush } from '../../stores/stkpush';
 
 // this endpoint will initiate the STK push to client's phone
 export default defineEventHandler(async (event) => {
@@ -9,10 +8,6 @@ export default defineEventHandler(async (event) => {
 	// daraja utils store
 	const darajaUtilsStore = useDarajaUtils();
 	const { generateTimeStamp, generateBase64Password } = darajaUtilsStore;
-
-	// stkpush store
-	const stkPushStore = useStkPush();
-	const { setCheckoutRequestIdInitiateSTKPush } = stkPushStore;
 
 	// take details from event body
 	const mpesaDetails = await readBody(event);
@@ -81,8 +76,14 @@ export default defineEventHandler(async (event) => {
 		};
 	}
 
-	// otherwise our STK push response was successfull
-	await setCheckoutRequestIdInitiateSTKPush(response.CheckoutRequestID);
+	// otherwise our STK push response was successfull now we validate the payment status
+	await $fetch('/validate-payment', {
+		body: JSON.stringify({
+			checkoutRequestId: response.CheckoutRequestID,
+			accessToken: accessToken,
+		}),
+	});
+
 	return {
 		status: 'SUCCESSFULL',
 		successfull: true,

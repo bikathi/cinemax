@@ -1,10 +1,5 @@
-import { useStkPush } from '../../../stores/stkpush';
-
 export default defineEventHandler(async (event) => {
-	const testState = useTestState();
-
 	console.log('Callback url fired...');
-	console.log(`state of testState: ${testState}`);
 	const transactionResponse = await readBody(event);
 	console.log('Transaction response: ' + JSON.stringify(transactionResponse));
 
@@ -22,7 +17,5 @@ export default defineEventHandler(async (event) => {
 
 	// if it's not 1032, then we update the store with the CheckoutRequestId provided in this callback
 	// this signals the UI to update and start validating the transaction
-	setCheckoutRequestIdDarajaCallback(
-		transactionResponse.Body.CheckoutRequestID,
-	);
+	console.log("client paid....");
 });
