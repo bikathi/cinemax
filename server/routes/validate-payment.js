@@ -2,16 +2,12 @@ import { useDarajaUtils } from '../../utils/darajapi-utils';
 
 // we will use this nedpoint to confirm if the payment went through
 export default defineEventHandler(async (event) => {
-	console.log('finally starting to validate payment...');
 	const darajaUtilsStore = useDarajaUtils();
 	const { generateTimeStamp, generateBase64Password } = darajaUtilsStore;
 
 	// extract details required for validating payment from request body
 	const validatePaymentRequirements = await readBody(event);
-	console.log(
-		'Validate payment requirements: ' +
-			JSON.stringify(validatePaymentRequirements),
-	);
+	console.log('Attempting to validate transaction...');
 
 	// extract some details from the runtimeConfig()
 	const runtimeConfig = useRuntimeConfig();
@@ -35,11 +31,13 @@ export default defineEventHandler(async (event) => {
 	const response = await $fetch(
 		'https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query',
 		{
+			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${validatePaymentRequirements.accessToken}`,
 			},
 			body: JSON.stringify(requestBody),
 		},
 	);
-	console.log('Validate payment response: ' + JSON.stringify(response));
+	console.log('response: ' + JSON.stringify(response));
+	return response;
 });

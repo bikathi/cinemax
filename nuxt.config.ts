@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
+      
     },
   },
   css: ['~/assets/css/tailwind.css'],

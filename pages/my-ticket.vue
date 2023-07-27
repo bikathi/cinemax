@@ -1,4 +1,9 @@
 <script setup lang="js">
+	definePageMeta({
+		name: "ticket"
+	});
+
+	const route = useRoute();
 	import html2canvas from 'html2canvas';
 
 	   function saveAsPNG() {
@@ -65,5 +70,9 @@
 			class="bg-purple-600 font-nunito p-2 px-3 text-white rounded-full inline-flex items-center justify-center text-lg w-fit">
 			Download Ticket
 		</button>
+
+		<NuxtLink :to="{ name: 'refferal', params: { fromNumber: 254113883976 } }"
+			>Checkout Out Our Refferal Program</NuxtLink
+		>
 	</div>
 </template>

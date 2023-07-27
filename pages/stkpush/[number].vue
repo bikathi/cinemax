@@ -30,9 +30,14 @@
 		console.log("data: " + data.value);
 		console.log("error: " + error.value);
 
-		if(!data.value.successfull) {
+		if(data.value.message === "failed to get auth token") {
 			console.log("attempt for transaction failed. please try again...");
 			// if we were not able to request for an STK push start the entire process again
+			tryingStkPush.value = false;
+			showTryAgain.value = true;
+		} else if(data.value.message === "transaction success") {
+			navigateTo({name: "ticket", params: {fromNumber: route.params.number}});
+		} else if(data.value.message === "transaction failed") {
 			tryingStkPush.value = false;
 			showTryAgain.value = true;
 		}

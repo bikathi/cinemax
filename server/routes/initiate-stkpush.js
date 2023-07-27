@@ -1,5 +1,5 @@
 import { useDarajaUtils } from '../../utils/darajapi-utils';
-
+import AfricasTalking from 'africastalking';
 // this endpoint will initiate the STK push to client's phone
 export default defineEventHandler(async (event) => {
 	console.log('initiate stk push called...');
@@ -37,6 +37,7 @@ export default defineEventHandler(async (event) => {
 			status: 'FAILED',
 			successfull: false,
 			data: null,
+			message: 'failed to get auth token',
 		};
 	}
 	accessToken = authTokenResponse.data.access_token;
@@ -69,24 +70,83 @@ export default defineEventHandler(async (event) => {
 	console.log('Intiate STK push response: ' + JSON.stringify(response));
 	if (response.ResponseCode !== '0') {
 		console.log('request for STK push failed... will exit now');
-		return {
-			status: 'FAILED',
-			successfull: false,
-			data: null,
-		};
 	}
 
 	// otherwise our STK push response was successfull now we validate the payment status
-	await $fetch('/validate-payment', {
-		body: JSON.stringify({
-			checkoutRequestId: response.CheckoutRequestID,
-			accessToken: accessToken,
-		}),
+	const interval = 6000; //ms
+	const maxAttempts = 6;
+
+	let paymentResponse = null;
+	let attempts = 0;
+
+	const checkPaymentStatus = async () => {
+		paymentResponse = await $fetch('/validate-payment', {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+			body: JSON.stringify({
+				checkoutRequestId: response.CheckoutRequestID,
+				accessToken: accessToken,
+			}),
+		});
+
+		if (
+			paymentResponse.ResponseCode ||
+			!paymentResponse ||
+			attempts >= maxAttempts
+		) {
+			clearInterval(intervalId);
+		}
+	};
+
+	const intervalId = setInterval(checkPaymentStatus, interval);
+
+	// start the interval to check the status
+	await new Promise((resolve) => {
+		setTimeout(resolve, interval * 6);
 	});
 
-	return {
-		status: 'SUCCESSFULL',
-		successfull: true,
-		data: null,
-	};
+	if (paymentResponse.ResponseCode !== '0') {
+		console.log('still processing payment...');
+	} else {
+		if (paymentResponse.ResultCode === '1032') {
+			console.log('payment was not successfull, thank you...');
+			return {
+				status: 'FAILED',
+				successfull: false,
+				data: null,
+				message: 'transaction failed',
+			};
+		} else if(paymentResponse.ResultCode === '0') {
+			console.log('payment was successfull, thank you...');
+			// const atApiKey = runtimeConfig.public.AT_API_KEY;
+
+			// console.log('AT API Key: ' + atApiKey);
+
+			// // initialize AT auth
+			// const africasTalking = AfricasTalking({
+			// 	apiKey: atApiKey,
+			// 	username: 'cinemaxsms',
+			// });
+
+			// console.log('Starting to send message...');
+
+			// // send refferal message
+			// const result = await africasTalking.SMS.send({
+			// 	to: `+${phoneNumber}`,
+			// 	message: `Refferal link:  http://localhost:3001/ref/${refferalUUID}/`,
+			// });
+
+			// console.log('Send sms result: ' + JSON.stringify(result, null, 2));
+			return {
+				status: 'SUCCESS',
+				successfull: true,
+				data: null,
+				message: 'transaction success',
+			};
+		}
+	}
+
+		
 });

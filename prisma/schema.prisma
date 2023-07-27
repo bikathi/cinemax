@@ -18,6 +18,7 @@ model Client {
   email        String
   mobileNumber String
   location     String
+  reffered Boolean @default(false)
 }
 
 model PaymentDetails {
@@ -25,4 +26,11 @@ model PaymentDetails {
   ticketNumber String   @unique
   date         DateTime
   clientName   String
+}
+
+model RefferedPeople {
+  id Int @id @default(autoincrement())
+  refferalId String @unique
+  fromNumber String
+  toNumber String
 }
