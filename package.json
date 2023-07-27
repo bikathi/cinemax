@@ -21,10 +21,12 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
     "@prisma/client": "^4.16.2",
+    "africastalking": "^0.6.2",
     "epic-spinners": "^2.0.0",
     "html2canvas": "^1.4.1",
     "marked": "^5.1.0",
-    "pinia": "^2.1.4"
+    "pinia": "^2.1.4",
+    "vue-qrcode-component": "^2.1.1"
   },
   "overrides": {
     "vue": "latest"
